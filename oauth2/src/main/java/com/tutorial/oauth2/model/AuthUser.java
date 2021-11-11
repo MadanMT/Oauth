@@ -1,7 +1,6 @@
-package com.tutorial.oauth2;
+package com.tutorial.oauth2.model;
 
-import com.tutorial.oauth2.model.Role;
-import com.tutorial.oauth2.model.User;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,14 +10,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-public class CustomUserDetails implements UserDetails {
-    private long id;
+public class AuthUser implements UserDetails {
     private String userName;
     private String password;
     Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(User user) {
-        this.id = user.getId();
+    public AuthUser(User user) {
         this.userName = user.getUserName();
         this.password = user.getPassword();
         List<GrantedAuthority> auths = new ArrayList<>();
@@ -28,14 +25,6 @@ public class CustomUserDetails implements UserDetails {
         this.authorities =auths;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -43,12 +32,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return this.userName;
     }
 
     @Override
